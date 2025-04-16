@@ -3,19 +3,24 @@ import os
 import json
 import re
 from datetime import datetime
-# тут находятся настройки которые можно автоматизировать + мой токен от huggingface 
-GITHUB_REPO = "swaitic/map-generation" # мой публичный репозиторий генерации карт для игры в ДнД
+!pip install yandex_cloud_ml_sdk
+from yandex_cloud_ml_sdk import YCloudML
+
+# Загрузка переменных из .env
+folder_id = "b1gj7dquk0viabuvs7gr"
+access_token = "AQVNzxjVEW5e6duHv7odnlXq88THMzz6ZiAOH7O0"
+
+sdk = YCloudML(folder_id=folder_id, auth=access_token)
+yandex_model = sdk.models.completions("yandexgpt", model_version="rc").configure(temperature=0.3)
+
+# Константы
+GITHUB_REPO = "swaitic/map-generation"
 GITHUB_USER = "swaitic"
-HUGGINGFACE_TOKEN = "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"
 LOCAL_REPO_PATH = "local_path_if_you_have"
 MR_START_DATE = "2025-04-01"
 MR_END_DATE = datetime.today().strftime('%Y-%m-%d')
 SAVE_PATH = "mr_analysis_report.json"
-MODEL_NAME = "bigcode/starcoder" #по словам ИИ эксперта заебись моедль для анализа кода
 
-headers = {
-    "Authorization": f"Bearer {HUGGINGFACE_TOKEN}"
-}
 def get_user_commits(repo, author, per_page=5):
     url = f"https://api.github.com/repos/{repo}/commits"
     params = {"author": author, "per_page": per_page}
@@ -35,7 +40,7 @@ def get_commit_diff(repo, sha):
     return "\n".join(diffs), commit_data.get("html_url", "URL неизвестен")
 
 def extract_changed_identifiers(diff):
-    pattern = re.compile(r"^\+.*\\bdef (\w+)\\b|\+.*\\bfunction (\w+)\\b|\+.*\\bclass (\w+)\\b", re.MULTILINE)
+    pattern = re.compile(r"^\+.*\bdef (\w+)\b|\+.*\bfunction (\w+)\b|\+.*\bclass (\w+)\b", re.MULTILINE)
     matches = pattern.findall(diff)
     names = {name for group in matches for name in group if name}
     return list(names)
@@ -97,17 +102,14 @@ def review_merge_request(diff, commit_url, mr_number, usages):
   ]
 }}
 """
-
-    response = requests.post(
-        f"https://api-inference.huggingface.co/models/{MODEL_NAME}",
-        headers=headers,
-        json={"inputs": prompt, "parameters": {"max_new_tokens": 1024}}
-    )
-
-    if response.status_code == 200:
-        return response.json()[0].get("generated_text", "")
-    else:
-        print(f"Ошибка HuggingFace API: {response.status_code}, {response.text}")
+    try:
+        result = yandex_model.run([
+            {"role": "system", "text": "Code Review"},
+            {"role": "user", "text": prompt}
+        ])
+        return result[0].text
+    except Exception as e:
+        print(f"Ошибка при обращении к YandexGPT: {e}")
         return None
 
 def main():
