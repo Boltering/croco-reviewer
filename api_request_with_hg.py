@@ -5,10 +5,12 @@ import re
 from datetime import datetime
 !pip install yandex_cloud_ml_sdk
 from yandex_cloud_ml_sdk import YCloudML
+from dotenv import load_dotenv
+# Загрузить переменные из .env
+load_dotenv()
 
-# Загрузка переменных из .env
-folder_id = "b1gj7dquk0viabuvs7gr"
-access_token = "AQVNzxjVEW5e6duHv7odnlXq88THMzz6ZiAOH7O0"
+folder_id = os.getenv("FOLDER_ID")
+access_token = os.getenv("ACCESS_KEY")
 
 sdk = YCloudML(folder_id=folder_id, auth=access_token)
 yandex_model = sdk.models.completions("yandexgpt", model_version="rc").configure(temperature=0.3)
