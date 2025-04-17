@@ -1,6 +1,71 @@
 import requests
+import os
+import re
 from datetime import datetime
-from typing import Optional
+from typing import Dict, List, Tuple, Optional, Any
+
+
+
+class GitHubDiffsCollector:
+    """Класс для сбора информации о diff'ах из GitHub репозитория."""
+
+    def __init__(self, github_token: str = None):
+        self.github_token = github_token or os.getenv("GITHUB_TOKEN")
+        self.headers = {"Authorization": f"token {self.github_token}"} if self.github_token else {}
+
+    def get_user_commits(self, repo: str, author: str, per_page: int = 5) -> List[Dict]:
+        """Получить список коммитов пользователя."""
+        url = f"https://api.github.com/repos/{repo}/commits"
+        params = {"author": author, "per_page": per_page}
+        response = requests.get(url, params=params, headers=self.headers)
+        response.raise_for_status()
+        return response.json()
+
+    def get_commit_diff(self, repo: str, sha: str) -> Tuple[str, str]:
+        """Получить diff и URL коммита."""
+        url = f"https://api.github.com/repos/{repo}/commits/{sha}"
+        response = requests.get(url, headers=self.headers)
+        response.raise_for_status()
+        commit_data = response.json()
+
+        diffs = []
+        for file in commit_data["files"]:
+            if "patch" in file:
+                diffs.append(f"--- {file['filename']}\n{file['patch']}")
+
+        return "\n".join(diffs), commit_data.get("html_url", "URL неизвестен")
+
+    @staticmethod
+    def extract_changed_identifiers(diff: str) -> List[str]:
+        """Извлечь изменённые идентификаторы из diff."""
+        pattern = re.compile(
+            r"^\+.*\bdef (\w+)\b|\+.*\bfunction (\w+)\b|\+.*\bclass (\w+)\b",
+            re.MULTILINE
+        )
+        matches = pattern.findall(diff)
+        return [name for group in matches for name in group if name]
+
+    @staticmethod
+    def find_usages(identifiers: List[str], local_repo_path: str) -> Dict[str, List[Tuple[str, int, str]]]:
+        """Найти использования идентификаторов в локальном репозитории."""
+        usage_map = {}
+        for root, _, files in os.walk(local_repo_path):
+            for file in files:
+                if file.endswith((".py", ".java", ".php")):
+                    file_path = os.path.join(root, file)
+                    try:
+                        with open(file_path, "r", encoding="utf-8") as f:
+                            lines = f.readlines()
+                        for i, line in enumerate(lines):
+                            for ident in identifiers:
+                                if ident in line:
+                                    usage_map.setdefault(ident, []).append(
+                                        (file_path, i + 1, line.strip())
+                                    )
+                    except:
+                        continue
+        return usage_map
+
 
 class GitHubPRDiffCollector:
     def __init__(self, github_token: str = None):
