@@ -3,6 +3,10 @@ import json
 from yandex_cloud_ml_sdk import YCloudML
 from typing import Dict, List, Tuple, Optional, Any
 
+from diffs_collectors import GitHubDiffsCollector
+from analyzers import CodeReviewPrompts, YandexGPTReviewer
+
+LOCAL_REPO_PATH = ''
 
 class CodeReviewPrompts:
     """Класс для управления промптами для ревью кода."""
@@ -11,6 +15,7 @@ class CodeReviewPrompts:
     def get_review_prompt(diff: str, commit_url: str, mr_number: int,
                           usages: Dict[str, List[Tuple[str, int, str]]]) -> str:
         """Сгенерировать промпт для анализа MR."""
+        
         usages_str = "\n".join(
             f"- {ident}: используется в {', '.join(f'{os.path.relpath(f, LOCAL_REPO_PATH)}:{line}' for f, line, _ in usage_list)}"
             for ident, usage_list in usages.items()
@@ -75,7 +80,9 @@ class YandexGPTReviewer:
 class MergeRequestAnalyzer:
     """Основной класс для анализа Merge Requests."""
 
-    def __init__(self, github_collector, prompt_generator, reviewer):
+    def __init__(self, github_collector: GitHubDiffsCollector, 
+                 prompt_generator: CodeReviewPrompts, 
+                 reviewer: YandexGPTReviewer):
         self.github_collector = github_collector
         self.prompt_generator = prompt_generator
         self.reviewer = reviewer
@@ -102,7 +109,7 @@ class MergeRequestAnalyzer:
 
             if review_json:
                 try:
-                    parsed = json.loads(review_json)
+                    parsed = json.loads(review_json.strip())
                     results.append(parsed)
                     print(f"MR #{idx} обработан: оценка {parsed.get('score')}/10")
                 except json.JSONDecodeError as e:
