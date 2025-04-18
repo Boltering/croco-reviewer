@@ -147,8 +147,6 @@ class MergeRequestAnalyzer:
                     parsed: dict = json.loads(review_json.strip())
                     
                     problems = parsed.get('problems')
-                    print(problems)
-
                     penalty = len(problems.get('minor', []))*self.problem_weights['minor'] + len(problems.get('regular', []))*self.problem_weights['regular'] + len(problems.get('critical;', []))*self.problem_weights['critical']
 
                     score = 10. - penalty
