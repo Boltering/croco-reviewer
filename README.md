@@ -1,29 +1,40 @@
 # Croco Reviewer
 
 API для анализа Merge Requests в GitHub репозиториях с использованием Yandex GPT.
+Как 
 
 ## 🚀 Запуск проекта
 
 ### Требования
-- Docker
 - `.env` файл с переменными окружения (см. `.env_example`)
 
-### Запуск через Docker
+### Запуск 
 1. Склонируйте репозиторий:
    ```bash
-   git clone https://github.com/your-username/croco-reviewer.git
+   git clone https://github.com/Boltering/croco-reviewer.git
    cd croco-reviewer
+   
+2. Установите зависимости через Poetry:
+   ```bash
+   pip install poetry
+   poetry shell
+   poetry install
+   ```
 
-2. Создайте .env файл на основе примера:
+3. Создайте .env файл на основе примера:
     ```bash
    cp .env_example .env
    
-Заполните необходимые переменные (GitHub Token, Yandex Cloud credentials).
+Заполните его:
+   ```ini
+   GITHUB_KEY=ваш_github_token
+   FOLDER_ID=ваш_yandex_cloud_folder_id
+   ACCESS_KEY=ваш_yandex_cloud_iam_token
+   ```
 
-3. Соберите и запустите контейнер:
+4. Запустите приложение:
     ```bash
-   docker build -t croco-reviewer .
-   docker run -p 8000:8000 --env-file .env croco-reviewer
+   poetry run python croco_reviewer/main.py
 
 ## Пример запроса
 После запуска API будет доступно на `http://localhost:8000`.
@@ -85,15 +96,3 @@ API для анализа Merge Requests в GitHub репозиториях с �
 - Yandex GPT - анализ кода
 
 - GitHub API - сбор данных о MR
-
-
-### Примечания:
-1. Перед первым запуском создайте `.env` файл на основе `.env.example` с вашими ключами.
-2. Для локальной разработки можно использовать:
-   ```bash
-   poetry install
-   poetry run uvicorn croco-reviewer.croco_reviewer.main:app --reload
-
-3. В продакшн-среде рекомендуется использовать:
-   ```dockerfile
-   RUN poetry install --only main --no-dev
