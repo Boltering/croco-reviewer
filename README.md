@@ -66,6 +66,7 @@ API для анализа Merge Requests в GitHub репозиториях с �
   "metadata": {
     "repo": "owner/repo",
     "user": "github-username",
+    "mean_score": 8
     "period": {
       "start": "2023-01-01",
       "end": "2023-12-31"
