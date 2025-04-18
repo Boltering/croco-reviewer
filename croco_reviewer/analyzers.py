@@ -164,6 +164,7 @@ class MergeRequestAnalyzer:
                 except json.JSONDecodeError as e:
                     print(f"Ошибка парсинга JSON от модели: {e}")
         total = len(results)
+        
         if total > 0:
           mean_score/=total
         else:
