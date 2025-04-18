@@ -163,7 +163,11 @@ class MergeRequestAnalyzer:
                     print(f"MR #{idx} обработан: оценка {score}/10")
                 except json.JSONDecodeError as e:
                     print(f"Ошибка парсинга JSON от модели: {e}")
-        mean_score/=len(results)
+        total = len(results)
+        if total > 0:
+          mean_score/=total
+        else:
+          mean_score=0
 
         return {
             "metadata": {
@@ -174,7 +178,7 @@ class MergeRequestAnalyzer:
                     "start": start_date,
                     "end": end_date
                 },
-                "total": len(results)
+                "total": total
             },
             "results": results
         }
