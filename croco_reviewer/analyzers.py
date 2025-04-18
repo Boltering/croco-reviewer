@@ -25,13 +25,15 @@ class CodeReviewPrompts:
 
 Ваша задача — провести ревью кода, оценить его качество, выявить проблемы, антипаттерны и положительные аспекты,  
 а также проанализировать **влияние изменений на остальной код**, где используются изменённые функции или классы.
-
 --- DIFF ---
 {diff}
 
 --- ФУНКЦИИ/КЛАССЫ, ГДЕ ПРИМЕНЯЮТСЯ ИЗМЕНЕНИЯ ---
 {usages_str}
 
+--- Уточнения ---
+- "Минус" перед строкой означает удаление в коммите, "Плюс" - новую, строку, замену на то что было удалено.
+- Весь код ревью оценивай как коммит проекта, и проводи оценку в этом контексте.
 Формат ответа (строго в JSON):
 {{
   "mr_number": {mr_number},
@@ -80,6 +82,7 @@ class CodeReviewPrompts:
     }}
   ]
 }}
+
 """
 
 
@@ -105,7 +108,6 @@ class YandexGPTReviewer:
 
 class MergeRequestAnalyzer:
     """Основной класс для анализа Merge Requests."""
-
     def __init__(self, github_collector: GitHubDiffsCollector, 
                  prompt_generator: CodeReviewPrompts, 
                  reviewer: YandexGPTReviewer):
@@ -125,7 +127,7 @@ class MergeRequestAnalyzer:
         commits = self.github_collector.get_user_commits(repo, user)
         print(commits)
         results = []
-
+        mean_score = 0
         for idx, commit in enumerate(commits, start=1):
             sha = commit["sha"]
             diff, commit_url = self.github_collector.get_commit_diff(repo, sha)
@@ -147,22 +149,24 @@ class MergeRequestAnalyzer:
                     parsed: dict = json.loads(review_json.strip())
                     
                     problems = parsed.get('problems')
-                    penalty = len(problems.get('minor', []))*self.problem_weights['minor'] + len(problems.get('regular', []))*self.problem_weights['regular'] + len(problems.get('critical;', []))*self.problem_weights['critical']
+                    penalty = (len(problems.get('minor', []))*self.problem_weights['minor']) + (len(problems.get('regular', []))*self.problem_weights['regular']) + (len(problems.get('critical', []))*self.problem_weights['critical'])
 
                     score = 10. - penalty
-
+                    mean_score+=score
                     parsed['score'] = f"{score}/10"
 
                     results.append(parsed)
+                    print(parsed)
                     print(f"MR #{idx} обработан: оценка {score}/10")
                 except json.JSONDecodeError as e:
                     print(f"Ошибка парсинга JSON от модели: {e}")
-                    
+        mean_score/=len(results)
 
         return {
             "metadata": {
                 "repo": repo,
                 "user": user,
+                "mean_score": mean_score,
                 "period": {
                     "start": start_date,
                     "end": end_date
