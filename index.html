@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Анализатор Репозитория</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    header {
+      position: relative;
+      height: 60px;
+      background-color: #202124;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding-left: 1rem;
+      overflow: hidden;
+    }
+
+    .animal-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      pointer-events: none;
+    }
+
+    .animal-group {
+      position: absolute;
+      top: 0;
+      font-size: 24px;
+      white-space: nowrap;
+      animation: moveLeft linear forwards;
+    }
+
+    @keyframes moveLeft {
+      0% {
+        transform: translateX(100vw);
+      }
+      100% {
+        transform: translateX(-200px);
+      }
+    }
+
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    input, textarea {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    textarea {
+      height: 200px;
+      resize: vertical;
+    }
+
+    button {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #1a73e8;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #155fc9;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="animal-container" id="animal-container"></div>
+    <h1>Анализатор Git Репозитория</h1>
+  </header>
+
+  <main>
+    <form>
+      <div>
+        <label for="repo">Репозиторий:</label>
+        <input type="text" id="repo" name="repo" placeholder="https://github.com/user/repo">
+      </div>
+
+      <div>
+        <label for="email">Почта пользователя:</label>
+        <input type="email" id="email" name="email" placeholder="user@example.com">
+      </div>
+
+      <div>
+        <label for="period">Период:</label>
+        <input type="text" id="period" name="period" placeholder="например, последние 30 дней">
+      </div>
+
+      <button type="submit">Анализировать</button>
+
+      <div>
+        <label for="result">Результат:</label>
+        <textarea id="result" name="result" readonly placeholder="Ответ модели появится здесь..."></textarea>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    const container = document.getElementById("animal-container");
+    const animals = ["🐱", "🐶", "🦀"];
+    
+    function getRandomGroup() {
+      const count = Math.floor(Math.random() * 2) + 2; // 2 to 4 animals
+      let group = "";
+      for (let i = 0; i < count; i++) {
+        group += animals[Math.floor(Math.random() * animals.length)] + " ";
+      }
+      return group.trim();
+    }
+
+    function createAnimalGroup() {
+      const div = document.createElement("div");
+      div.className = "animal-group";
+      div.style.top = `${Math.random() * 40}px`; // Random vertical position
+      div.style.animationDuration = `${10 + Math.random() * 5}s`; // 5 to 10 seconds
+      div.textContent = getRandomGroup();
+      container.appendChild(div);
+
+      // Remove element after animation completes
+      div.addEventListener("animationend", () => {
+        div.remove();
+      });
+    }
+
+    // Generate a new group every ~1 second
+    setInterval(createAnimalGroup, 800);
+  </script>
+
+</body>
+</html>
