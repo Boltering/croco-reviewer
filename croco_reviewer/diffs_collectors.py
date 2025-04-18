@@ -13,13 +13,29 @@ class GitHubDiffsCollector:
         self.github_token = github_token or os.getenv("GITHUB_TOKEN")
         self.headers = {"Authorization": f"token {self.github_token}"} if self.github_token else {}
 
-    def get_user_commits(self, repo: str, author: str, per_page: int = 5) -> List[Dict]:
-        """Получить список коммитов пользователя."""
+    def get_user_commits(self, repo: str, author: str) -> List[Dict]:
+        """Получить все коммиты пользователя со всех страниц."""
         url = f"https://api.github.com/repos/{repo}/commits"
-        params = {"author": author, "per_page": per_page}
-        response = requests.get(url, params=params, headers=self.headers)
-        response.raise_for_status()
-        return response.json()
+        all_commits = []
+        page = 1
+
+        while True:
+            params = {
+                "author": author,
+                "per_page": 10000,  # максимум
+                "page": page
+            }
+            response = requests.get(url, params=params, headers=self.headers)
+            response.raise_for_status()
+            commits = response.json()
+
+            if not commits:
+                break
+
+            all_commits.extend(commits)
+            page += 1
+
+        return all_commits
 
     def get_commit_diff(self, repo: str, sha: str) -> Tuple[str, str]:
         """Получить diff и URL коммита."""
