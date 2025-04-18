@@ -113,6 +113,12 @@ class MergeRequestAnalyzer:
         self.prompt_generator = prompt_generator
         self.reviewer = reviewer
 
+        self.problem_weights = {
+            'minor': 0.5,
+            'regular': 1.,
+            'critical': 1.5
+        }
+
     def analyze(self, repo: str, user: str, local_repo_path: str,
                 start_date: str, end_date: str) -> Dict[str, Any]:
         """Основной метод анализа."""
@@ -135,12 +141,22 @@ class MergeRequestAnalyzer:
             review_json = self.reviewer.review_code(prompt)
 
             if review_json:
-                print(review_json)
+                # print(review_json)
                 try:
                     review_json = review_json.replace('```', '')
-                    parsed = json.loads(review_json.strip())
+                    parsed: dict = json.loads(review_json.strip())
+                    
+                    problems = parsed.get('problems')
+                    print(problems)
+
+                    penalty = len(problems.get('minor', []))*self.problem_weights['minor'] + len(problems.get('regular', []))*self.problem_weights['regular'] + len(problems.get('critical;', []))*self.problem_weights['critical']
+
+                    score = 10. - penalty
+
+                    parsed['score'] = f"{score}/10"
+
                     results.append(parsed)
-                    print(f"MR #{idx} обработан: оценка {parsed.get('score')}/10")
+                    print(f"MR #{idx} обработан: оценка {score}/10")
                 except json.JSONDecodeError as e:
                     print(f"Ошибка парсинга JSON от модели: {e}")
                     
