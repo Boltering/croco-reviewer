@@ -36,21 +36,48 @@ class CodeReviewPrompts:
 {{
   "mr_number": {mr_number},
   "url": "{commit_url}",
-  "score": число от 1 до 10,
-  "score_comment": "пояснение",
   "complexity": "S/M/L",
-  "problems": [
-    {{ "type": "Тип", "description": "Описание проблемы" }}
-  ],
+  "problems": {{
+    "minor": [
+      {{
+        "type": "Тип проблемы",
+        "description": "Описание с привязкой к коду",
+        "lines": [номера строк или null]
+      }}
+    ],
+    "regular": [
+      {{
+        "type": "Тип проблемы",
+        "description": "Описание с привязкой к коду",
+        "lines": [номера строк или null]
+      }}
+    ],
+    "critical": [
+      {{
+        "type": "Тип проблемы",
+        "description": "Описание с привязкой к коду",
+        "lines": [номера строк или null]
+      }}
+    ]
+  }},
   "antipatterns": [
-    {{ "name": "Название", "description": "Описание антипаттерна" }}
+    {{
+      "name": "Название", 
+      "description": "Описание антипаттерна",
+      "lines": [номера строк или null]
+    }}
   ],
   "positives": [
-    "Положительный момент 1",
-    "Положительный момент 2"
+    {{
+      "aspect": "Описание позитивного аспекта",
+      "lines": [номера строк или null]
+    }}
   ],
   "impacts": [
-    "Описание потенциального влияния на другие части кода"
+    {{
+      "description": "Описание влияния",
+      "affected_components": ["список затронутых компонентов"]
+    }}
   ]
 }}
 """
@@ -108,13 +135,15 @@ class MergeRequestAnalyzer:
             review_json = self.reviewer.review_code(prompt)
 
             if review_json:
+                print(review_json)
                 try:
+                    review_json = review_json.replace('```', '')
                     parsed = json.loads(review_json.strip())
                     results.append(parsed)
                     print(f"MR #{idx} обработан: оценка {parsed.get('score')}/10")
                 except json.JSONDecodeError as e:
                     print(f"Ошибка парсинга JSON от модели: {e}")
-                    print(review_json)
+                    
 
         return {
             "metadata": {
