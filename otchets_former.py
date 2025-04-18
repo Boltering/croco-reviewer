@@ -24,6 +24,7 @@ html_template = """
     <h1>Анализ Merge Request'ов</h1>
     <p><strong>Репозиторий:</strong> {repo}</p>
     <p><strong>Автор:</strong> {user}</p>
+    <p><strong>Средний score:</strong> {mean_score}</p>
     <p><strong>Период:</strong> {start} — {end}</p>
     <p><strong>Всего MR:</strong> {total}</p>
     <hr>
@@ -95,6 +96,7 @@ def generate_html(report):
     return html_template.format(
         repo=report["metadata"]["repo"],
         user=report["metadata"]["user"],
+        mean_score= report["metadata"]["mean_score"],
         start=report["metadata"]["period"]["start"],
         end=report["metadata"]["period"]["end"],
         total=report["metadata"]["total"],
