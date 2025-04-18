@@ -1,0 +1,2226 @@
+{
+  "metadata": {
+    "repo": "AlfaInsurance/devQ_testData_PythonProject",
+    "user": "VasilevArtem",
+    "mean_score": 8.472972972972974,
+    "period": {
+      "start": "2024-05-01",
+      "end": "2025-04-18"
+    },
+    "total": 37
+  },
+  "results": [
+    {
+      "mr_number": 1,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/085c02b8f12852d697459fb66c80cdd961ab832f",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Исправление синтаксической ошибки в правилах CI/CD",
+          "lines": [
+            11,
+            55,
+            80,
+            105
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в синтаксисе правил CI/CD могут повлиять на выполнение этапов конвейера",
+          "affected_components": [
+            "workflow",
+            "lint_code",
+            "deploy-to-test",
+            "rollback-deployment-test",
+            "runner-cleanup-test"
+          ]
+        }
+      ],
+      "score": "10.0/10"
+    },
+    {
+      "mr_number": 2,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/0a6ec2583f49e3a6cd8e25f9d450b52de2bb33d2",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Добавление проверки ветки develop для тегов test_, что улучшает контроль за развертыванием в тестовую среду",
+          "lines": [
+            11,
+            55,
+            80,
+            105
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в правилах развертывания для тегов test_ теперь требуют, чтобы ветка была develop, что может повлиять на существующие процессы CI/CD",
+          "affected_components": [
+            "deploy-to-test",
+            "rollback-deployment-test",
+            "runner-cleanup-test"
+          ]
+        }
+      ],
+      "score": "10.0/10"
+    },
+    {
+      "mr_number": 3,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/accfed9aae539b45956a7a39fad7dfb11fc80e57",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Добавлена проверка на наличие taskid у объекта ACL, что может предотвратить ненужные операции",
+          "lines": [
+            25,
+            26,
+            27
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения могут повлиять на выполнение функции send_acl, если acl_object.taskid уже установлен",
+          "affected_components": [
+            "send_acl"
+          ]
+        }
+      ],
+      "score": "10.0/10"
+    },
+    {
+      "mr_number": 4,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/f95e2790f6e82345f380665534f06a2e567c5606",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Добавление транзакции для обеспечения атомарности операции",
+          "lines": [
+            11,
+            17
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в функции send_acl теперь гарантируют, что все операции внутри функции будут выполнены как одна атомарная операция, что улучшает надежность и целостность данных.",
+          "affected_components": [
+            "send_acl"
+          ]
+        }
+      ],
+      "score": "10.0/10"
+    },
+    {
+      "mr_number": 5,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/7deaa3d27a62123d45274177b84444a9de152530",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Изменение параметра",
+            "description": "Уменьшено время countdown с 10 до 5 секунд в задаче send_acl_task. Это может привести к более частым запускам задачи и потенциальной нагрузке на систему.",
+            "lines": [
+              19
+            ]
+          }
+        ],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Избыточное использование sleep",
+          "description": "Удалён sleep(5) из функции send_acl, что может улучшить производительность, но важно убедиться, что это не повлияет на корректность работы.",
+          "lines": [
+            45
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Использование select_for_update",
+          "lines": [
+            21
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в параметрах countdown и использовании select_for_update могут повлиять на производительность и поведение системы при параллельном выполнении задач.",
+          "affected_components": [
+            "accesslist/signals.py",
+            "acladmin/tasks.py"
+          ]
+        }
+      ],
+      "score": "9.5/10"
+    },
+    {
+      "mr_number": 6,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/d75bc6d309e4a598e031b349a20df13e1839f287",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [],
+        "critical": [
+          {
+            "type": "Потенциальная ошибка в индексе строки",
+            "description": "Изменение индекса среза строки с [17:] на [22:] может привести к некорректному формированию URL, если ожидаемая подстрока начинается с позиции 17.",
+            "lines": [
+              40
+            ]
+          }
+        ]
+      },
+      "antipatterns": [
+        {
+          "name": "Жестко закодированные URL",
+          "description": "Использование жестко закодированных URL в коде может вызвать проблемы при изменении структуры сайта или при переносе кода в другую среду.",
+          "lines": [
+            40
+          ]
+        }
+      ],
+      "positives": [],
+      "impacts": [
+        {
+          "description": "Изменение влияет на формирование URL для docx файла, который используется в отправке сообщений в Omnitracker.",
+          "affected_components": [
+            "send_acl функция",
+            "формирование URL для docx"
+          ]
+        }
+      ],
+      "score": "8.5/10"
+    },
+    {
+      "mr_number": 7,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/b38da580976cce1f6bb0ebf45a51fc8356335eed",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [],
+        "critical": [
+          {
+            "type": "Потенциальная ошибка в индексе строки",
+            "description": "Изменение среза строки с [5:] на [17:] может привести к некорректному формированию URL, если длина doc_result меньше 17 символов.",
+            "lines": [
+              40
+            ]
+          }
+        ]
+      },
+      "antipatterns": [
+        {
+          "name": "Жестко закодированные URL",
+          "description": "Использование жестко закодированных URL в коде может усложнить его поддержку и адаптацию в будущем.",
+          "lines": [
+            40
+          ]
+        }
+      ],
+      "positives": [],
+      "impacts": [
+        {
+          "description": "Изменение формирования URL может повлиять на корректность работы функции send_acl и всех мест, где она используется.",
+          "affected_components": [
+            "send_acl"
+          ]
+        }
+      ],
+      "score": "8.5/10"
+    },
+    {
+      "mr_number": 8,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/d1235ee0259c74ac82292f11bbb6af8798ebf386",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Излишняя детализация логов",
+            "description": "Добавление URL в лог может быть излишним и усложнить восприятие логов.",
+            "lines": [
+              42
+            ]
+          }
+        ],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Улучшение логирования",
+          "lines": [
+            42
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в логировании не влияют на функциональность системы, но улучшают отслеживаемость процесса отправки ACL.",
+          "affected_components": [
+            "send_acl"
+          ]
+        }
+      ],
+      "score": "9.5/10"
+    },
+    {
+      "mr_number": 9,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/73df26af25cd1aaafa176ef8ccfbd2dfb4b08c22",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Избыточный импорт",
+            "description": "Импорт модуля sleep из time без явного использования в других частях кода может быть излишним.",
+            "lines": [
+              1
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Неясное использование sleep",
+            "description": "Добавление sleep(5) без объяснения причины может привести к ненужным задержкам в выполнении задачи. Необходимо документировать или обосновать такое использование.",
+            "lines": [
+              45
+            ]
+          }
+        ],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Магические числа",
+          "description": "Использование числа 5 в sleep(5) без пояснения его значения является антипаттерном 'магические числа'.",
+          "lines": [
+            45
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Добавление полезного импорта",
+          "lines": [
+            1
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Добавление задержки может повлиять на время выполнения задачи send_acl, что потенциально может замедлить обработку ACL.",
+          "affected_components": [
+            "send_acl"
+          ]
+        }
+      ],
+      "score": "8.5/10"
+    },
+    {
+      "mr_number": 10,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/6e90212a4a710c794e9502cc828ab322cc07cdea",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Изменение прав доступа",
+            "description": "Удалена настройка прав доступа к файлу (os.chmod). Это может повлиять на безопасность и доступность файла.",
+            "lines": [
+              1286,
+              1431
+            ]
+          }
+        ],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Удаление избыточного кода",
+          "lines": [
+            1286,
+            1431
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения могут повлиять на права доступа к создаваемым файлам, что потенциально может вызвать проблемы с их использованием в дальнейшем.",
+          "affected_components": [
+            "compare_rows",
+            "create_markdown_file"
+          ]
+        }
+      ],
+      "score": "9.5/10"
+    },
+    {
+      "mr_number": 11,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/2886662b686e1690e91b852c1647844c4277b3a0",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Добавление установки прав доступа к файлам с помощью os.chmod() улучшает безопасность приложения, устанавливая явные права доступа.",
+          "lines": [
+            1287,
+            1432
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения касаются добавления прав доступа к создаваемым файлам, что может повлиять на последующие операции с этими файлами в системе.",
+          "affected_components": [
+            "ownerlist/utils.py"
+          ]
+        }
+      ],
+      "score": "10.0/10"
+    },
+    {
+      "mr_number": 12,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/d76581acf5a858126389e9ca398b4fd6a010aa65",
+      "complexity": "M",
+      "problems": {
+        "minor": [
+          {
+            "type": "Логическая избыточность",
+            "description": "Удаление условной проверки на платформу системы (sys.platform) может привести к ошибкам в пути файла на Windows. Возможно, стоит сохранить эту проверку для кроссплатформенности.",
+            "lines": [
+              2024,
+              2025
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Изменение формата пути",
+            "description": "Изменение формирования пути к файлу может повлиять на работу системы, если где-то используется старый формат пути. Необходимо проверить все места использования.",
+            "lines": [
+              1240,
+              1428
+            ]
+          },
+          {
+            "type": "Изменение возвращаемого значения",
+            "description": "Функция compare_rows теперь возвращает полный путь к файлу, а не относительный. Это может повлиять на код, который ожидает относительный путь.",
+            "lines": [
+              1286
+            ]
+          }
+        ],
+        "critical": [
+          {
+            "type": "Потенциальная ошибка в URL",
+            "description": "Изменение среза строки в URL (doc_result[1:] -> doc_result[5:]) может привести к некорректным URL. Необходимо проверить корректность формирования URL.",
+            "lines": [
+              45
+            ]
+          }
+        ]
+      },
+      "antipatterns": [
+        {
+          "name": "Жестко закодированные пути",
+          "description": "Использование жестко закодированных путей может привести к ошибкам при развертывании на других средах. Лучше использовать настройки проекта для определения путей.",
+          "lines": [
+            1428,
+            1239,
+            1246
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Использование стандартных функций для работы с путями",
+          "lines": [
+            17,
+            18
+          ]
+        },
+        {
+          "aspect": "Добавление обработки исключений при формировании имени файла",
+          "lines": [
+            1243,
+            1249
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в формировании путей к файлам могут повлиять на все места, где используются эти пути, включая загрузку и скачивание файлов.",
+          "affected_components": [
+            "accesslist/views.py",
+            "ownerlist/utils.py"
+          ]
+        },
+        {
+          "description": "Изменение формата возвращаемого значения функции compare_rows может повлиять на код, который использует это значение.",
+          "affected_components": [
+            "ownerlist/utils.py"
+          ]
+        }
+      ],
+      "score": "6.0/10"
+    },
+    {
+      "mr_number": 13,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/ad02a5809a53c8753d7136e5eeea087ca997ec0c",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Добавление настраиваемого администратора для модели Team с улучшенными опциями отображения и поиска",
+          "lines": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в админ-панели Django для модели Team, добавление настраиваемого администратора",
+          "affected_components": [
+            "teams.admin",
+            "teams.models"
+          ]
+        }
+      ],
+      "score": "10.0/10"
+    },
+    {
+      "mr_number": 14,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/964d5db65efa1717aa2cdc2300680fcd079a61bb",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Восстановление обработки ошибок, что улучшает стабильность функции",
+          "lines": [
+            1402,
+            1424
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в функции create_markdown_file могут повлиять на создание md-файлов и обработку ошибок при их создании",
+          "affected_components": [
+            "create_markdown_file"
+          ]
+        }
+      ],
+      "score": "10.0/10"
+    },
+    {
+      "mr_number": 15,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/5cba04dd9dc46c59cb9ef55967d381c897ece86a",
+      "complexity": "M",
+      "problems": {
+        "minor": [
+          {
+            "type": "Code Style",
+            "description": "Удаление строгого режима в функции zip может привести к неожиданным результатам при обработке данных разной длины.",
+            "lines": [
+              1185
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Error Handling",
+            "description": "Удаление блока try-except может привести к необработанным исключениям и аварийному завершению программы.",
+            "lines": [
+              1402
+            ]
+          },
+          {
+            "type": "Functionality",
+            "description": "Удаление части функций из func_map может привести к потере функциональности для соответствующих ключей.",
+            "lines": [
+              1410,
+              1411
+            ]
+          }
+        ],
+        "critical": [
+          {
+            "type": "Data Integrity",
+            "description": "Отсутствие обработки исключений может привести к потере данных или некорректной записи в файл.",
+            "lines": [
+              1421
+            ]
+          }
+        ]
+      },
+      "antipatterns": [
+        {
+          "name": "Обработка ошибок",
+          "description": "Удаление блока try-except без адекватной замены может привести к необработанным исключениям.",
+          "lines": [
+            1402,
+            1421
+          ]
+        },
+        {
+          "name": "Изменение функциональности",
+          "description": "Удаление функций из func_map без явной замены может привести к потере функциональности.",
+          "lines": [
+            1410,
+            1411
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Упрощение кода",
+          "lines": [
+            1402,
+            1421
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения могут повлиять на корректность обработки данных и создание markdown файлов.",
+          "affected_components": [
+            "create_markdown_file",
+            "process_data_table"
+          ]
+        }
+      ],
+      "score": "6.0/10"
+    },
+    {
+      "mr_number": 16,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/6ec752335792304829187194861ca093c6378922",
+      "complexity": "M",
+      "problems": {
+        "minor": [
+          {
+            "type": "Code readability",
+            "description": "Избыточное использование квадратных скобок при создании списка в строке 7 файла accesslist/templatetags/random_numbers.py",
+            "lines": [
+              7
+            ]
+          },
+          {
+            "type": "Unused code",
+            "description": "Неиспользуемый код закомментирован в строках 3-6 файла accesslist/templatetags/random_numbers.py",
+            "lines": [
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Code style",
+            "description": "Изменение форматирования строк в функции send_acl в файле acladmin/tasks.py не влияет на функциональность, но может быть излишним",
+            "lines": [
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38
+            ]
+          }
+        ],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Magic numbers",
+          "description": "Использование магических чисел без объяснения их смысла, например, в строке 7 файла accesslist/templatetags/random_numbers.py",
+          "lines": [
+            7
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Использование встроенных функций Django",
+          "lines": [
+            7
+          ]
+        },
+        {
+          "aspect": "Добавление новой функции prepare_data_for_table для обработки данных",
+          "lines": [
+            1504,
+            1505,
+            1506,
+            1507,
+            1508,
+            1509,
+            1510,
+            1511,
+            1512
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в функции random_int могут повлиять на использование этой функции в других частях проекта, где ожидается получение случайного числа",
+          "affected_components": [
+            "accesslist/templatetags/random_numbers.py"
+          ]
+        },
+        {
+          "description": "Изменения в функции send_acl могут повлиять на логирование ошибок и отправку уведомлений в случае неудачной генерации docx файла",
+          "affected_components": [
+            "acladmin/tasks.py"
+          ]
+        },
+        {
+          "description": "Добавление функции prepare_data_for_table может повлиять на обработку данных в функции md_write_acl_traffic",
+          "affected_components": [
+            "ownerlist/utils.py"
+          ]
+        }
+      ],
+      "score": "8.0/10"
+    },
+    {
+      "mr_number": 17,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/7b11a6a02357d9941a83c4c70d729b92ffc62df4",
+      "complexity": "L",
+      "problems": {
+        "minor": [
+          {
+            "type": "Код с отступами",
+            "description": "Неправильные отступы в коде могут затруднить его чтение и понимание.",
+            "lines": [
+              1995,
+              2014,
+              2030
+            ]
+          },
+          {
+            "type": "Избыточная обработка исключений",
+            "description": "Использование блока try-except без указания конкретных исключений может скрыть реальные ошибки.",
+            "lines": [
+              2009,
+              2025
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Дублирование кода",
+            "description": "Обнаружено дублирование логики для обработки данных, что может привести к ошибкам при модификации.",
+            "lines": [
+              1065,
+              1099
+            ]
+          },
+          {
+            "type": "Неоднозначное использование переменных",
+            "description": "Переменные используются без явного определения их типа или назначения, что затрудняет понимание кода.",
+            "lines": [
+              1168,
+              1236
+            ]
+          }
+        ],
+        "critical": [
+          {
+            "type": "Неправильное использование исключений",
+            "description": "Исключения обрабатываются слишком обобщённо, что может скрыть важные ошибки.",
+            "lines": [
+              1104,
+              1115
+            ]
+          },
+          {
+            "type": "Потенциальные проблемы с производительностью",
+            "description": "Циклы и условные операторы могут быть оптимизированы для улучшения производительности.",
+            "lines": [
+              1451,
+              1501
+            ]
+          }
+        ]
+      },
+      "antipatterns": [
+        {
+          "name": "Сложный метод",
+          "description": "Метод make_doc содержит слишком много логики и должен быть разбит на более мелкие методы.",
+          "lines": [
+            1099,
+            1409
+          ]
+        },
+        {
+          "name": "Магические числа и строки",
+          "description": "Использование магических чисел и строк затрудняет понимание кода и его модификацию.",
+          "lines": [
+            1236,
+            1392
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Добавление логирования",
+          "description": "Логирование используется для отслеживания выполнения программы и выявления ошибок.",
+          "lines": [
+            1994,
+            2011
+          ]
+        },
+        {
+          "aspect": "Использование функций для разделения логики",
+          "description": "Функции используются для разделения логики и улучшения читаемости кода.",
+          "lines": [
+            1099,
+            1168
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в функции make_doc могут повлиять на создание docx файлов и их содержимое.",
+          "affected_components": [
+            "ownerlist/utils.py"
+          ]
+        },
+        {
+          "description": "Изменения в обработке данных могут повлиять на отображение информации в docx файлах.",
+          "affected_components": [
+            "accesslist/views.py"
+          ]
+        }
+      ],
+      "score": "4.0/10"
+    },
+    {
+      "mr_number": 18,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/52eb1b976f12ac49760e059b21ffed2a1df6bd45",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [
+          {
+            "type": "Логическая ошибка",
+            "description": "Изменение в функции count_empty_strings может привести к непредвиденному поведению, так как теперь проверяется не только количество пустых строк, но и длина списка. Это может вызвать ложные срабатывания.",
+            "lines": [
+              5
+            ]
+          }
+        ],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Неявные зависимости",
+          "description": "Добавление проверки длины списка в функцию count_empty_strings создаёт неявную зависимость от размера списка, что может привести к ошибкам при изменении структуры данных.",
+          "lines": [
+            5
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Упрощение условия в HTML-шаблоне",
+          "lines": [
+            91
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в функции count_empty_strings могут повлиять на логику отображения строк в HTML-шаблоне и на работу скриптов, зависящих от этой функции.",
+          "affected_components": [
+            "accesslist/templates/acl_traffic.html",
+            "accesslist/templatetags/empty_strings.py"
+          ]
+        }
+      ],
+      "score": "9.0/10"
+    },
+    {
+      "mr_number": 19,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/7f0c70eb2e4f89f2464351404d56d6e3bebe4c07",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Неиспользуемая переменная",
+            "description": "Переменная `project_desc` не используется после присвоения ей значения.",
+            "lines": [
+              1125
+            ]
+          }
+        ],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Неиспользуемые переменные",
+          "description": "Игнорирование возвращаемого значения функции может привести к ошибкам и усложнить понимание кода.",
+          "lines": [
+            1125
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Использование `apply_async` с параметром `countdown` для задержки выполнения задачи",
+          "lines": [
+            16
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменение метода отправки задачи в Celery с `delay` на `apply_async` с задержкой на 10 секунд может повлиять на время обработки ACL.",
+          "affected_components": [
+            "accesslist/signals.py"
+          ]
+        },
+        {
+          "description": "Игнорирование второй возвращаемой переменной в `ownerlist/utils.py` может указывать на изменение логики, где ранее использовалось значение `project_desc`.",
+          "affected_components": [
+            "ownerlist/utils.py"
+          ]
+        }
+      ],
+      "score": "9.5/10"
+    },
+    {
+      "mr_number": 20,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/655e8052704e08e8a00ccf29ddafff12fe6cc058",
+      "complexity": "M",
+      "problems": {
+        "minor": [
+          {
+            "type": "Логическая ошибка",
+            "description": "Метод count_empty_strings считает количество строк, содержащих только пробел, а не пустые строки.",
+            "lines": [
+              91
+            ]
+          },
+          {
+            "type": "Избыточный код",
+            "description": "Проверка item|count_empty_strings > 1 повторяется дважды, что является избыточным.",
+            "lines": [
+              91,
+              93
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Неэффективный код",
+            "description": "Использование split для обработки ответа от Omnitracker может быть неэффективным, особенно если ответ большой.",
+            "lines": [
+              2357,
+              2951
+            ]
+          }
+        ],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Дублирование кода",
+          "description": "Проверка наличия 'strResponse' в ответе от Omnitracker дублируется в двух местах.",
+          "lines": [
+            2357,
+            2951
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Добавление новой функциональности для обработки пустых строк",
+          "lines": [
+            90,
+            91
+          ]
+        },
+        {
+          "aspect": "Улучшение логирования ошибок при формировании docx файла",
+          "lines": [
+            32
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в шаблоне acl_traffic.html могут повлиять на отображение данных в интерфейсе.",
+          "affected_components": [
+            "accesslist/templates/acl_traffic.html"
+          ]
+        },
+        {
+          "description": "Добавление нового тега шаблона empty_strings может потребовать дополнительных проверок при использовании.",
+          "affected_components": [
+            "accesslist/templatetags/empty_strings.py"
+          ]
+        },
+        {
+          "description": "Изменения в функции send_acl могут повлиять на процесс отправки ACL в GitLab.",
+          "affected_components": [
+            "acladmin/tasks.py"
+          ]
+        },
+        {
+          "description": "Изменения в функции send_onmitracker и celery_send_omnitracker могут повлиять на взаимодействие с Omnitracker.",
+          "affected_components": [
+            "ownerlist/utils.py"
+          ]
+        }
+      ],
+      "score": "8.0/10"
+    },
+    {
+      "mr_number": 21,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/6280446b49f9edd5be7345355d82146be6a6a3e9",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Логическая ошибка",
+            "description": "Функция count_empty_strings считает количество строк, содержащих только один пробел, что может не соответствовать ожидаемому определению 'пустой строки'.",
+            "lines": [
+              9
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Неэффективное использование ресурсов",
+            "description": "Использование скрипта для отображения уведомления внутри шаблона может быть неэффективным и лучше вынести логику в view или использовать более подходящие механизмы Django для отображения уведомлений.",
+            "lines": [
+              91,
+              92,
+              93,
+              94,
+              95
+            ]
+          }
+        ],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Бизнес-логика в шаблонах",
+          "description": "Добавление бизнес-логики (подсчет пустых строк и показ уведомлений) непосредственно в шаблон нарушает принцип разделения ответственности.",
+          "lines": [
+            91,
+            92,
+            93,
+            94,
+            95,
+            323
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Добавление новой функциональности",
+          "lines": [
+            2,
+            91
+          ]
+        },
+        {
+          "aspect": "Использование кастомных тегов для улучшения читаемости шаблона",
+          "lines": [
+            2
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения могут повлиять на отображение и обработку данных в интерфейсе, где используется шаблон acl_traffic.html.",
+          "affected_components": [
+            "accesslist/templates/acl_traffic.html"
+          ]
+        }
+      ],
+      "score": "8.5/10"
+    },
+    {
+      "mr_number": 23,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/711d79360da13ceeb846ae83e16bd3f7e535cbf6",
+      "complexity": "M",
+      "problems": {
+        "minor": [
+          {
+            "type": "Косметическая проблема",
+            "description": "Отступы и форматирование кода были изменены, но без явного улучшения читаемости.",
+            "lines": [
+              2334,
+              2496,
+              2933
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Дублирование кода",
+            "description": "Обработка ошибок и повторные попытки запроса дублируются в нескольких местах.",
+            "lines": [
+              2497,
+              2931
+            ]
+          },
+          {
+            "type": "Неоднозначное использование переменных",
+            "description": "Переменные 'result' используются для разных целей в разных блоках кода, что может привести к ошибкам.",
+            "lines": [
+              2500,
+              2510,
+              2940
+            ]
+          }
+        ],
+        "critical": [
+          {
+            "type": "Потенциальная ошибка обработки исключений",
+            "description": "Исключения могут быть не обработаны должным образом, что приведёт к некорректной работе приложения.",
+            "lines": [
+              2508,
+              2950
+            ]
+          }
+        ]
+      },
+      "antipatterns": [
+        {
+          "name": "Дублирование кода",
+          "description": "Обработка ошибок и повторные попытки запроса дублируются в нескольких местах, что усложняет поддержку кода.",
+          "lines": [
+            2497,
+            2931
+          ]
+        },
+        {
+          "name": "Неструктурированная обработка ошибок",
+          "description": "Обработка ошибок и исключений не структурирована, что может привести к трудностям в отладке и поддержке.",
+          "lines": [
+            2508,
+            2950
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Добавление повторных попыток запроса",
+          "lines": [
+            2497
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения могут повлиять на стабильность работы системы при обработке запросов к Omnitracker.",
+          "affected_components": [
+            "send_onmitracker",
+            "omni_check_status",
+            "celery_send_omnitracker"
+          ]
+        }
+      ],
+      "score": "6.0/10"
+    },
+    {
+      "mr_number": 25,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/be96db9d2567233705bab5c4e953289c90c79ecc",
+      "complexity": "M",
+      "problems": {
+        "minor": [
+          {
+            "type": "Логирование",
+            "description": "Лишние операторы печати (print) в коде, которые могут быть удалены или заменены на логирование.",
+            "lines": [
+              1984,
+              1992
+            ]
+          },
+          {
+            "type": "Избыточный код",
+            "description": "Условие else после if, которое устанавливает переменную в пустую строку, если условие не выполняется. Это избыточно, так как переменная уже инициализирована пустой строкой.",
+            "lines": [
+              324,
+              329
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Обработка исключений",
+            "description": "Блок try-except был закомментирован, что может привести к необработанным исключениям.",
+            "lines": [
+              2003,
+              2027
+            ]
+          }
+        ],
+        "critical": [
+          {
+            "type": "Неполная обработка ошибок",
+            "description": "Отсутствие обработки ошибок при создании файлов может привести к сбоям в работе приложения.",
+            "lines": [
+              2015,
+              2027
+            ]
+          }
+        ]
+      },
+      "antipatterns": [
+        {
+          "name": "Закомментированный код",
+          "description": "Наличие закомментированного кода может затруднить понимание логики программы и её поддержку.",
+          "lines": [
+            2003,
+            2027
+          ]
+        },
+        {
+          "name": "Дублирование кода",
+          "description": "Дублирование логики обработки file_path для docx и md файлов может быть упрощено с помощью абстракции.",
+          "lines": [
+            2004,
+            2014
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Добавление логирования",
+          "lines": [
+            2005,
+            2007,
+            2010,
+            2012
+          ]
+        },
+        {
+          "aspect": "Улучшение обработки путей файлов",
+          "lines": [
+            2021,
+            2023
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в функции makeAndDownloadMdAndDocx могут повлиять на процесс создания и загрузки файлов.",
+          "affected_components": [
+            "makeAndDownloadMdAndDocx",
+            "create_markdown_file",
+            "make_doc"
+          ]
+        }
+      ],
+      "score": "6.5/10"
+    },
+    {
+      "mr_number": 26,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/813f43e556a267486e517a155678f9f841b1b2a2",
+      "complexity": "M",
+      "problems": {
+        "minor": [
+          {
+            "type": "Code Style",
+            "description": "Использование f-strings вместо .format() улучшает читаемость кода.",
+            "lines": [
+              140,
+              273,
+              326,
+              495,
+              508,
+              747,
+              1079,
+              1185,
+              1308
+            ]
+          },
+          {
+            "type": "Unnecessary Code",
+            "description": "Удаление лишних импортов улучшает читаемость и уменьшает время загрузки модуля.",
+            "lines": [
+              46
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Logging",
+            "description": "Не все ошибки логируются с использованием f-strings, что может затруднить отладку.",
+            "lines": [
+              507,
+              759
+            ]
+          }
+        ],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Magic Numbers",
+          "description": "Использование магических чисел без объяснения их значения.",
+          "lines": [
+            1694
+          ]
+        },
+        {
+          "name": "Hard-coded URLs",
+          "description": "URL-адреса жестко закодированы в строках, что затрудняет их изменение.",
+          "lines": [
+            1188,
+            1599
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Улучшение читаемости кода",
+          "lines": [
+            140,
+            273,
+            326,
+            495,
+            508,
+            747,
+            1079,
+            1185,
+            1308
+          ]
+        },
+        {
+          "aspect": "Удаление неиспользуемых импортов",
+          "lines": [
+            46
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в функциях и методах могут повлиять на их поведение и взаимодействие с другими компонентами системы.",
+          "affected_components": [
+            "accesslist/views.py",
+            "ownerlist/utils.py"
+          ]
+        }
+      ],
+      "score": "8.0/10"
+    },
+    {
+      "mr_number": 27,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/1af7ea6ba9429a93c98c3b22275af0ee669ceffd",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Code Style",
+            "description": "Удаление аргумента strict=False в вызовах функции zip может сделать код менее понятным для тех, кто не знаком с поведением zip по умолчанию.",
+            "lines": [
+              1400,
+              1411,
+              1432,
+              1441,
+              1487,
+              2117,
+              2709
+            ]
+          }
+        ],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Упрощение кода",
+          "lines": [
+            1400,
+            1411,
+            1432,
+            1441,
+            1487,
+            2117,
+            2709
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в функции table могут повлиять на форматирование таблиц, если поведение zip без strict=False приведёт к неожиданным результатам.",
+          "affected_components": [
+            "ownerlist/utils.py"
+          ]
+        }
+      ],
+      "score": "9.5/10"
+    },
+    {
+      "mr_number": 28,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/3645a9c270ebd68edb15661138b47547d1da8272",
+      "complexity": "M",
+      "problems": {
+        "minor": [
+          {
+            "type": "Code Style",
+            "description": "Использование f-строк улучшает читаемость кода.",
+            "lines": [
+              282,
+              323,
+              400,
+              682,
+              755,
+              850,
+              904,
+              1116,
+              1228,
+              1403,
+              1425,
+              1478,
+              1583,
+              1603,
+              1729,
+              1839,
+              2039,
+              2103,
+              2201,
+              2441
+            ]
+          },
+          {
+            "type": "Whitespace Issues",
+            "description": "Лишние пробелы перед закрывающей скобкой.",
+            "lines": [
+              1238,
+              1240
+            ]
+          }
+        ],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Улучшение читаемости кода через f-строки",
+          "lines": [
+            282,
+            323,
+            400,
+            682,
+            755,
+            850,
+            904,
+            1116,
+            1228,
+            1403,
+            1425,
+            1478,
+            1583,
+            1603,
+            1729,
+            1839,
+            2039,
+            2103,
+            2201,
+            2441
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в форматировании строк и улучшении читаемости не влияют на функциональность системы.",
+          "affected_components": [
+            "accesslist/signals.py",
+            "acladmin/tasks.py",
+            "ownerlist/utils.py"
+          ]
+        }
+      ],
+      "score": "9.0/10"
+    },
+    {
+      "mr_number": 29,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/6b5b642b011a6ccb1e12bc0d17eda00cb32c451c",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Логирование",
+            "description": "Используется print для логирования вместо специализированных библиотек логирования, таких как logging.",
+            "lines": [
+              108
+            ]
+          }
+        ],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Hard-coded logging",
+          "description": "Использование print для вывода сообщений вместо использования системы логирования.",
+          "lines": [
+            108
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Добавление новой задачи",
+          "lines": [
+            106,
+            107,
+            108
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Добавление новой задачи не влияет на существующий функционал, так как нет явных применений изменённых функций или классов.",
+          "affected_components": [
+            "acladmin/tasks.py"
+          ]
+        }
+      ],
+      "score": "9.5/10"
+    },
+    {
+      "mr_number": 33,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/cd6a98f15f486ca9aab68da38cc386099cee3c56",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Удаление неиспользуемого кода",
+          "lines": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Удаление класса LKSwaggerAutoSchema и связанных методов не повлияет на функциональность, так как нет явных применений этого класса в проекте.",
+          "affected_components": [
+            "acladmin/yasg.py"
+          ]
+        }
+      ],
+      "score": "10.0/10"
+    },
+    {
+      "mr_number": 34,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/8dd2b0c89268f5f917c1edec75e6ad37fb6dabc2",
+      "complexity": "M",
+      "problems": {
+        "minor": [
+          {
+            "type": "Code Style",
+            "description": "Неоднородный стиль написания EmailMessage в accesslist/views.py и ownerlist/utils.py",
+            "lines": [
+              948,
+              2542
+            ]
+          },
+          {
+            "type": "Redundancy",
+            "description": "Лишнее создание переменной msg в accesslist/views.py, можно было бы использовать метод send сразу",
+            "lines": [
+              950
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Hardcoding",
+            "description": "В GitLab CI используется жёстко заданный URL для pip, что может быть проблемой при изменении инфраструктуры",
+            "lines": [
+              38,
+              39,
+              40
+            ]
+          }
+        ],
+        "critical": [
+          {
+            "type": "Security Risk",
+            "description": "Использование sudo в GitLab CI без явной необходимости может привести к проблемам с безопасностью",
+            "lines": [
+              41,
+              42,
+              43
+            ]
+          }
+        ]
+      },
+      "antipatterns": [
+        {
+          "name": "Magic String",
+          "description": "Использование магических строк в GitLab CI для настройки pip",
+          "lines": [
+            35,
+            36,
+            37,
+            38,
+            39,
+            40
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Добавление версии в интерфейс",
+          "lines": [
+            58
+          ]
+        },
+        {
+          "aspect": "Обработка ошибок при отправке писем",
+          "lines": [
+            961
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в GitLab CI могут повлиять на процесс сборки и развёртывания приложения",
+          "affected_components": [
+            "CI/CD pipeline"
+          ]
+        },
+        {
+          "description": "Добавление контекста commit_tag может повлиять на шаблоны, использующие этот контекст",
+          "affected_components": [
+            "templates/base.html"
+          ]
+        }
+      ],
+      "score": "6.5/10"
+    },
+    {
+      "mr_number": 35,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/c44c48b9f0ea66048df84a01a5ca31dfe68a97b6",
+      "complexity": "M",
+      "problems": {
+        "minor": [
+          {
+            "type": "Redundant Code",
+            "description": "Переменная `data` создается, но используется только один раз для получения валидированных данных. Можно упростить код, используя `serializer = self.InputSerializer(data=request.data).is_valid(raise_exception=True).validated_data`",
+            "lines": [
+              2078
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Code Readability",
+            "description": "Метод `post` стал более сложным и трудным для чтения из-за добавления сериализаторов и проверки разрешений",
+            "lines": [
+              2069,
+              2136
+            ]
+          },
+          {
+            "type": "Unnecessary Variable Assignment",
+            "description": "Переменные `ip_source`, `ip_destination` и `port` повторно присваиваются значения после валидации сериализатора, что является избыточным",
+            "lines": [
+              2091,
+              2092,
+              2093
+            ]
+          }
+        ],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Needless Complexity",
+          "description": "Добавление сложных структур (входные и выходные сериализаторы) для простой операции может усложнить понимание и поддержку кода",
+          "lines": [
+            2073,
+            2088
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Improved API Documentation",
+          "lines": [
+            2080
+          ]
+        },
+        {
+          "aspect": "Input Validation",
+          "description": "Использование сериализаторов для валидации входных данных улучшает надежность и безопасность API",
+          "lines": [
+            2073
+          ]
+        },
+        {
+          "aspect": "Access Control",
+          "description": "Добавление проверки разрешений `HasAPIKey | IsAdminUser` улучшает контроль доступа к API",
+          "lines": [
+            2074
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в `APIACLInfoView` могут повлиять на существующие интеграционные тесты и клиентские приложения, использующие этот API",
+          "affected_components": [
+            "APIACLInfoView",
+            "Клиентские приложения"
+          ]
+        }
+      ],
+      "score": "7.5/10"
+    },
+    {
+      "mr_number": 37,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/a61f1965d547433eb65618c9613ea2c8f1fc6452",
+      "complexity": "M",
+      "problems": {
+        "minor": [
+          {
+            "type": "Code Style",
+            "description": "Неоднородный стиль оформления строк (использование одинарных и двойных кавычек).",
+            "lines": [
+              1,
+              14,
+              20,
+              21
+            ]
+          },
+          {
+            "type": "Unused Code",
+            "description": "Удаление модели AccessToken и связанных с ней функций может указывать на ненужный код в других частях приложения.",
+            "lines": [
+              41,
+              42,
+              43
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Missing Documentation",
+            "description": "Отсутствие документации для новых или изменённых функций и классов.",
+            "lines": [
+              null
+            ]
+          }
+        ],
+        "critical": [
+          {
+            "type": "Data Loss",
+            "description": "Удаление модели AccessToken может привести к потере данных, если они использовались в других частях системы.",
+            "lines": [
+              41
+            ]
+          }
+        ]
+      },
+      "antipatterns": [
+        {
+          "name": "Spaghetti Code",
+          "description": "Чрезмерное использование вложенных путей в urls.py может усложнить понимание и поддержку кода.",
+          "lines": [
+            75,
+            76,
+            77,
+            78,
+            80,
+            81,
+            82
+          ]
+        },
+        {
+          "name": "Magic Numbers",
+          "description": "Использование магических чисел в строках, например, в регулярных выражениях для URL.",
+          "lines": [
+            87,
+            94,
+            101,
+            110
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Improved Readability",
+          "lines": [
+            15,
+            16,
+            17,
+            18
+          ]
+        },
+        {
+          "aspect": "Consistent Formatting",
+          "lines": [
+            22,
+            23,
+            24,
+            25
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в accesslist/models.py могут повлиять на функциональность, связанную с доступом и авторизацией.",
+          "affected_components": [
+            "accesslist/admin.py",
+            "accesslist/urls.py"
+          ]
+        },
+        {
+          "description": "Удаление модели AccessToken и связанных функций может потребовать изменений в других частях приложения, использующих эту модель.",
+          "affected_components": [
+            "accesslist/tasks.py",
+            "accesslist/views.py"
+          ]
+        }
+      ],
+      "score": "6.5/10"
+    },
+    {
+      "mr_number": 38,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/1a5d68202d67c016d4e6a743be5471be591ad933",
+      "complexity": "S",
+      "problems": {
+        "minor": [],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [],
+      "impacts": [
+        {
+          "description": "Изменения не влияют на остальной код, так как нет явных применений изменённой функции.",
+          "affected_components": []
+        }
+      ],
+      "score": "10.0/10"
+    },
+    {
+      "mr_number": 39,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/e3466868164a29d05673fb4c62c90b703374e62e",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Formatting",
+            "description": "Отсутствует новая строка в конце файла, что может вызвать проблемы при дальнейшем редактировании.",
+            "lines": [
+              5
+            ]
+          }
+        ],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [],
+      "positives": [
+        {
+          "aspect": "Добавление нового контекстного процессора для передачи переменной commit_tag в шаблоны Django.",
+          "lines": [
+            4
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Новый контекстный процессор может быть использован в шаблонах Django для доступа к переменной commit_tag.",
+          "affected_components": [
+            "Шаблоны Django"
+          ]
+        }
+      ],
+      "score": "9.5/10"
+    },
+    {
+      "mr_number": 40,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/c151c3804d452d059a045b382d6ffa351501d31c",
+      "complexity": "L",
+      "problems": {
+        "minor": [
+          {
+            "type": "Code Duplication",
+            "description": "Дублирование кода для обработки ошибок при отправке в git и omnitracker (строки 583-600 и 929-951).",
+            "lines": [
+              583,
+              600,
+              929,
+              951
+            ]
+          },
+          {
+            "type": "Unnecessary Exception Handling",
+            "description": "Избыточное использование try-except блоков, которые не добавляют ценности (строки 754-766).",
+            "lines": [
+              754,
+              766
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Inconsistent Error Handling",
+            "description": "Неоднородная обработка ошибок в разных частях кода, что затрудняет понимание и поддержку (строки 839-860).",
+            "lines": [
+              839,
+              860
+            ]
+          },
+          {
+            "type": "Hardcoded URLs",
+            "description": "Использование жестко закодированных URL в коде, что делает его менее гибким (строка 919).",
+            "lines": [
+              919
+            ]
+          }
+        ],
+        "critical": [
+          {
+            "type": "Potential Security Vulnerability",
+            "description": "Возможная уязвимость в обработке пользовательских данных без должной валидации (строки 636-644).",
+            "lines": [
+              636,
+              644
+            ]
+          }
+        ]
+      },
+      "antipatterns": [
+        {
+          "name": "God Function",
+          "description": "Функция check_taskid_and_status слишком большая и выполняет множество различных задач, что затрудняет ее понимание и тестирование (строки 839-1022).",
+          "lines": [
+            839,
+            1022
+          ]
+        },
+        {
+          "name": "Magic Numbers",
+          "description": "Использование магических чисел без объяснения их значения (строка 933).",
+          "lines": [
+            933
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Improved Error Handling",
+          "lines": [
+            755,
+            757
+          ]
+        },
+        {
+          "aspect": "Better Logging",
+          "lines": [
+            846,
+            854
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в обработке ошибок и логировании могут повлиять на работу системы и требуют тщательного тестирования.",
+          "affected_components": [
+            "accesslist/views.py",
+            "ownerlist/utils.py"
+          ]
+        },
+        {
+          "description": "Добавление новых функций для работы с git и omnitracker может потребовать обновления документации и обучения пользователей.",
+          "affected_components": [
+            "accesslist/views.py"
+          ]
+        }
+      ],
+      "score": "5.5/10"
+    },
+    {
+      "mr_number": 41,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/7e532e5d3bdaf9692a10c47df3dda00e147a5829",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Security",
+            "description": "Использование sudo без явной необходимости может привести к нежелательным последствиям.",
+            "lines": [
+              38,
+              39,
+              40
+            ]
+          },
+          {
+            "type": "Code Style",
+            "description": "Неоднородный стиль оформления кода в блоке if-else (отступы).",
+            "lines": [
+              37,
+              38,
+              39,
+              40,
+              41
+            ]
+          }
+        ],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Hardcoded Paths",
+          "description": "Использование жестко заданных путей может вызвать проблемы при развертывании в различных средах.",
+          "lines": [
+            38,
+            39
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Добавление версии в интерфейс",
+          "lines": [
+            61,
+            62,
+            63
+          ]
+        },
+        {
+          "aspect": "Обновление переменной окружения COMMIT_TAG",
+          "lines": [
+            37,
+            38,
+            39,
+            40,
+            41
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в .gitlab-ci.yml могут повлиять на процесс сборки и развертывания.",
+          "affected_components": [
+            ".gitlab-ci.yml"
+          ]
+        },
+        {
+          "description": "Добавление отображения версии в templates/base.html может повлиять на внешний вид и функциональность интерфейса.",
+          "affected_components": [
+            "templates/base.html"
+          ]
+        }
+      ],
+      "score": "9.0/10"
+    },
+    {
+      "mr_number": 43,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/d86d92a9e352ae14f6671cb61d7d1c9e2d218abf",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Избыточный код",
+            "description": "Удалены пустые ячейки таблицы в строке 82, что улучшает читаемость.",
+            "lines": [
+              82
+            ]
+          },
+          {
+            "type": "Изменения в разметке",
+            "description": "Добавлена ячейка 'Резервирование' в строке 82, что может потребовать дополнительной логики.",
+            "lines": [
+              82
+            ]
+          }
+        ],
+        "regular": [
+          {
+            "type": "Изменения в структуре HTML",
+            "description": "Добавлены дополнительные div-контейнеры вокруг textarea и select в строках 101 и 129, что усложняет структуру.",
+            "lines": [
+              101,
+              129
+            ]
+          }
+        ],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Избыточная вложенность",
+          "description": "Добавление лишних div-контейнеров вокруг элементов ввода может усложнить стили CSS и JavaScript-логику.",
+          "lines": [
+            100,
+            132
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Улучшение читаемости",
+          "lines": [
+            72
+          ]
+        },
+        {
+          "aspect": "Добавление стилей для улучшения внешнего вида таблицы",
+          "lines": [
+            655
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения в HTML-разметке могут повлиять на CSS и JavaScript, связанные с этими элементами.",
+          "affected_components": [
+            "HTML",
+            "CSS"
+          ]
+        }
+      ],
+      "score": "8.0/10"
+    },
+    {
+      "mr_number": 44,
+      "url": "https://github.com/AlfaInsurance/devQ_testData_PythonProject/commit/4881b87f1b9b39f877c4defc9c687988fe36d124",
+      "complexity": "S",
+      "problems": {
+        "minor": [
+          {
+            "type": "Code Style",
+            "description": "Отсутствие пробелов после запятых в селекторах jQuery может ухудшить читаемость кода.",
+            "lines": [
+              262
+            ]
+          }
+        ],
+        "regular": [],
+        "critical": []
+      },
+      "antipatterns": [
+        {
+          "name": "Hard-coded Selectors",
+          "description": "Использование жёстко закодированных селекторов может усложнить поддержку и расширение функционала в будущем.",
+          "lines": [
+            261,
+            262
+          ]
+        }
+      ],
+      "positives": [
+        {
+          "aspect": "Добавление функциональности для очистки поля ввода IP-адреса при изменении выбранного параметра улучшает взаимодействие с пользователем.",
+          "lines": [
+            261,
+            265
+          ]
+        }
+      ],
+      "impacts": [
+        {
+          "description": "Изменения могут повлиять на функциональность, связанную с обработкой событий изменения в текстовых областях и ввода IP-адресов.",
+          "affected_components": [
+            "acl_traffic.html"
+          ]
+        }
+      ],
+      "score": "9.5/10"
+    }
+  ]
+}
