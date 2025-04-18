@@ -4,7 +4,6 @@ from yandex_cloud_ml_sdk import YCloudML
 from typing import Dict, List, Tuple, Optional, Any
 
 from diffs_collectors import GitHubDiffsCollector
-from analyzers import CodeReviewPrompts, YandexGPTReviewer
 
 LOCAL_REPO_PATH = ''
 
@@ -91,6 +90,7 @@ class MergeRequestAnalyzer:
                 start_date: str, end_date: str) -> Dict[str, Any]:
         """Основной метод анализа."""
         commits = self.github_collector.get_user_commits(repo, user)
+        print(commits)
         results = []
 
         for idx, commit in enumerate(commits, start=1):
